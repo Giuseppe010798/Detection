@@ -1,0 +1,5 @@
+<launch>
+
+    <node pkg="detection" type="people_detection.py" name="visualization_node" output="screen"/>
+
+</launch>
