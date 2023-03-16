@@ -9,7 +9,7 @@ rospy.init_node('visualization_node')
 
 
 def rcv_detection(msg):
-    rospy.loginfo('--- DETECTION HERE ---')
+    # rospy.loginfo('--- DETECTION HERE ---')
     im = ros_numpy.numpify(msg.detections[0].source_img)
     if im is None:
         return

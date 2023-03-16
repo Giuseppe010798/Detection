@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-
 import os
 import time
 
@@ -9,7 +8,7 @@ import numpy.random
 import ros_numpy
 import rospy
 import tensorflow as tf
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image, CompressedImage
 from vision_msgs.msg import Detection2D, ObjectHypothesisWithPose, Detection2DArray
 
 KEYPOINT_DICT = {
@@ -113,8 +112,6 @@ def show_inference(image, class_id=1):
 
 
 def detect_and_publish(msg, image):
-    np_image = image
-
     image = tf.expand_dims(image, axis=0)
 
     # --- MODELLO MobileNetV2 ---
@@ -132,10 +129,10 @@ def detect_and_publish(msg, image):
 
     try:
         if boxes is not None:
-            max_x = round(boxes[0][3] * 320)
-            max_y = round(boxes[0][2] * 240)
-            min_x = round(boxes[0][1] * 320)
-            min_y = round(boxes[0][0] * 240)
+            max_x = round(boxes[0][3] * 640)
+            max_y = round(boxes[0][2] * 480)
+            min_x = round(boxes[0][1] * 640)
+            min_y = round(boxes[0][0] * 480)
             score = scores[0]
     except:
         pass
@@ -182,8 +179,8 @@ def detect_and_publish(msg, image):
     d.bbox.center.y = center_y
 
     # --- Rescaling image from 640x480 to 320x240 ---
-    np_image = ros_numpy.msgify(Image, np_image[::2, ::2], encoding="rgb8")
-    d.source_img = np_image
+    # np_image = ros_numpy.msgify(Image, np_image[::2, ::2], encoding="rgb8")
+    d.source_img = msg
 
     o = ObjectHypothesisWithPose()
     o.score = score
