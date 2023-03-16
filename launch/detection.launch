@@ -148,7 +148,8 @@
         </include>
     </group>
 
-    <node pkg="detection" type="visualization.py" name="visualization_node" output="screen"/>
-
+    <node pkg="detection" type="camera_acquisition.py" name="acquisition_node" output="screen"/>
+    <node pkg="detection" type="merge_depth.py" name="merging_node" output="screen"/>
+    <node pkg="detection" type="people_detection.py" name="detection_node" output="screen"/>
 
 </launch>
