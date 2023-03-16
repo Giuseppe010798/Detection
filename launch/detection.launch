@@ -149,6 +149,6 @@
 
     <node pkg="detection" type="people_detection.py" name="detection_node" output="screen"/>
     <node pkg="detection" type="camera_acquisition.py" name="acquisition_node" output="screen"/>
-    <node pkg="detection" type="visualization_depth.py" name="merge_node" output="screen"/>
+    <node pkg="detection" type="merge_depth.py" name="merge_node" output="screen"/>
 
 </launch>
