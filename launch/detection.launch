@@ -51,7 +51,7 @@
     <arg name="ordered_pc" default="false"/>
 
     <arg name="enable_sync" default="false"/>
-    <arg name="align_depth" default="false"/>
+    <arg name="align_depth" default="true"/>
 
     <arg name="publish_tf" default="true"/>
     <arg name="tf_publish_rate" default="0"/>
@@ -71,6 +71,7 @@
     <arg name="stereo_module/gain/1" default="16"/>
     <arg name="stereo_module/exposure/2" default="1"/>
     <arg name="stereo_module/gain/2" default="16"/>
+
 
     <group ns="$(arg camera)">
         <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
@@ -147,8 +148,7 @@
         </include>
     </group>
 
-    <node pkg="detection" type="people_detection.py" name="detection_node" output="screen"/>
-    <node pkg="detection" type="camera_acquisition.py" name="acquisition_node" output="screen"/>
-    <node pkg="detection" type="merge_depth.py" name="merge_node" output="screen"/>
+    <node pkg="detection" type="visualization.py" name="visualization_node" output="screen"/>
+
 
 </launch>
