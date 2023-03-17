@@ -9,6 +9,7 @@ import ros_numpy
 import rospy
 import tensorflow as tf
 from sensor_msgs.msg import Image, CompressedImage
+from std_msgs.msg import Float32
 from vision_msgs.msg import Detection2D, ObjectHypothesisWithPose, Detection2DArray
 
 KEYPOINT_DICT = {
@@ -187,7 +188,8 @@ def detect_and_publish(msg, image):
     o.id = 0
     d.results.append(o)
     message.detections.append(d)
-    pub.publish(message)
+    pub_det.publish(message)
+    pub_score.publish(score)
 
 
 try:
@@ -202,7 +204,8 @@ try:
 
     rospy.loginfo("--- MODEL LOADED ---")
 
-    pub = rospy.Publisher('/detection', Detection2DArray, queue_size=1)
+    pub_det = rospy.Publisher('/detection', Detection2DArray, queue_size=1)
+    pub_score = rospy.Publisher('/detection_score', Float32, queue_size=1)
     si = rospy.Subscriber("/image_people", Image, rcv_image)
 
     # --- Inference ---
