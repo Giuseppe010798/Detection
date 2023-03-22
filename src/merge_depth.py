@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import math
 
 import ros_numpy
 import rospy
@@ -23,8 +24,10 @@ class DepthConverter:
         if image is None:
             return
         for d in msg.detections:
-            self.center_x = d.bbox.center.x
-            self.center_y = d.bbox.center.y
+            # In d.bbox.center there are min_x and min_y instead
+            width = d.bbox.size_x - d.bbox.center.x  # max_x - min_x
+            height = d.bbox.size_y - d.bbox.center.y  # max_y - min_y
+            self.center_x, self.center_y = d.bbox.center.x + width / 2, d.bbox.center.y + height / 2
 
     def convert_depth_image(self, msg: Image):
         im = ros_numpy.numpify(msg)
@@ -40,7 +43,8 @@ class DepthConverter:
         depth_pose.header.frame_id = "base_scan"
         depth_pose.header.stamp = rospy.Time.now()
 
-        depth_pose.pose.position.x = float(im[int(self.center_x)][int(self.center_y)] / 1000) - 0.30
+        depth_pose.pose.position.x = float(im[int(self.center_x)][int(self.center_y)] / 1000) * math.cos(
+            30) - 0.25  # dx = d*cos(30) - 0.25cm (distance cam-laser)
         depth_pose.pose.position.y = 0
         depth_pose.pose.position.z = 0
 
@@ -55,7 +59,6 @@ class DepthConverter:
     def run():
         try:
             rospy.spin()
-
         except KeyboardInterrupt:
             print("Shutting down")
 

@@ -8,7 +8,7 @@ import cv2
 rospy.init_node('visualization_node')
 
 
-def rcv_detection(msg):
+def rcv_detection(msg: Detection2DArray):
     # rospy.loginfo('--- DETECTION HERE ---')
     im = ros_numpy.numpify(msg.detections[0].source_img)
     if im is None:
@@ -16,8 +16,8 @@ def rcv_detection(msg):
     h, w, _ = im.shape
     for d in msg.detections:
         b = [d.bbox.center.y, d.bbox.center.x, d.bbox.size_y, d.bbox.size_x]
-        b[0] -= b[2] / 2
-        b[1] -= b[3] / 2
+        # b[0] -= b[2] / 2
+        # b[1] -= b[3] / 2
         start_point = (int(b[1]), int(b[0]))
         end_point = (int(b[3]), int(b[2]))
         col = (0, 255, 0)

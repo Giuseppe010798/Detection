@@ -117,7 +117,7 @@ def detect_and_publish(msg, image):
 
     # --- MODELLO MobileNetV2 ---
 
-    image = tf.cast(tf.image.resize_with_pad(image, 320, 320),
+    image = tf.cast(tf.image.resize_with_pad(image, 480, 640),
                     dtype=tf.uint8)
 
     boxes, classes, scores = show_inference(image)
@@ -176,8 +176,13 @@ def detect_and_publish(msg, image):
     d = Detection2D()
     d.bbox.size_x = max_x
     d.bbox.size_y = max_y
-    d.bbox.center.x = center_x
-    d.bbox.center.y = center_y
+
+    # Non si trova la formula
+    # d.bbox.center.x = center_x
+    # d.bbox.center.y = center_y
+
+    d.bbox.center.x = min_x
+    d.bbox.center.y = min_x
 
     # --- Rescaling image from 640x480 to 320x240 ---
     # np_image = ros_numpy.msgify(Image, np_image[::2, ::2], encoding="rgb8")
