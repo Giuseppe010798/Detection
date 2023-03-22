@@ -182,7 +182,7 @@ def detect_and_publish(msg, image):
     # d.bbox.center.y = center_y
 
     d.bbox.center.x = min_x
-    d.bbox.center.y = min_x
+    d.bbox.center.y = min_y
 
     # --- Rescaling image from 640x480 to 320x240 ---
     # np_image = ros_numpy.msgify(Image, np_image[::2, ::2], encoding="rgb8")
