@@ -32,7 +32,7 @@ class DepthConverter:
     def convert_depth_image(self, msg: Image):
         im = ros_numpy.numpify(msg)
         print('Depth at center(%d, %d): %f(mm)\r' % (
-            int(self.center_x), int(self.center_y), im[int(self.center_x)][int(self.center_y)]))
+            int(self.center_x), int(self.center_y), im[int(self.center_y)][int(self.center_x)]))
 
         pose = self.get_depth_pose(im)
         self.pub.publish(pose)
