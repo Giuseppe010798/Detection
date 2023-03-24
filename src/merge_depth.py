@@ -43,7 +43,7 @@ class DepthConverter:
         depth_pose.header.frame_id = "base_scan"
         depth_pose.header.stamp = rospy.Time.now()
 
-        depth_pose.pose.position.x = float(im[int(self.center_x)][int(self.center_y)] / 1000)
+        depth_pose.pose.position.x = float(im[int(self.center_y)][int(self.center_x)] / 1000) - 0.3
         depth_pose.pose.position.y = 0
         depth_pose.pose.position.z = 0
 
